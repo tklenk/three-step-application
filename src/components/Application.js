@@ -20,51 +20,56 @@ class Application extends Component {
         step: this.state.step + 1,
     })
   }
+
+  prevStep = () => {
+    this.setState({
+        step: this.state.step - 1,
+    })
+  }
   
   handleChange = input => e => {
     this.setState({
       [input]: e.target.value
     })
   }    
-  
+
   render() {    
     const { step, name, email, phone, experience, employer, link } = this.state
+    const dataForm = { step, name, email, phone, experience, employer, link }
 
     switch(step) {
       case 1: 
         return (
-          <StepOne 
+          <StepOne
             nextStep={this.nextStep} 
             handleChange={this.handleChange} 
-            name={name}
-            email={email}
-            phone={phone}
+            dataForm={dataForm}
           />
         )
       case 2: 
         return (
           <StepTwo 
             nextStep={this.nextStep} 
+            prevStep={this.prevStep} 
             handleChange={this.handleChange} 
-            experience={experience}
-            employer={employer}
-            link={link} 
+            dataForm={dataForm} 
           />
         )
       case 3: 
         return (
           <Summary 
             nextStep={this.nextStep} 
+            prevStep={this.prevStep} 
             handleChange={this.handleChange} 
-            name={name}
-            email={email}
-            phone={phone}
-            experience={experience}
-            employer={employer}
-            link={link} 
+            dataForm={dataForm}
           />
         )
+      case 4:
+        return (
+          <h1>Thank You for Submitting an Application!</h1>
+        )
       default:
+        return
     }
   }
 }

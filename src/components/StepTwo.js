@@ -2,10 +2,10 @@ import React from 'react'
 
 function StepTwo(props) {
        
-    const { experience, employer, link, handleChange, nextStep } = props
+    const { dataForm, handleChange, nextStep, prevStep } = props
         
     return (
-        <form className="steps step2">
+        <div className="steps step2">
             <ul className="circles">
                 <li className='circle'></li>
                 <li className='circle active2'></li>
@@ -15,30 +15,36 @@ function StepTwo(props) {
                     name="experience"
                     type="text" 
                     placeholder="Years of experience..." 
-                    experience={experience}
+                    value={dataForm.experience}
                     onChange={handleChange('experience')} 
                 />
                 <input 
                     name="employer"
                     type="text" 
                     placeholder="Previous employer..."
-                    employer={employer}
+                    value={dataForm.employer}
                     onChange={handleChange('employer')} 
                 />
                 <input 
                     name="link"
                     type="url"
                     placeholder="Link to LinkedIn..." 
-                    link={link}
+                    value={dataForm.link}
                     onChange={handleChange('link')} 
                 />
+                <button 
+                    className="steps-button"
+                    onClick={() => prevStep()}
+                >
+                    Back
+                </button>
                 <button 
                     className="steps-button"
                     onClick={() => nextStep()}
                 >
                     Complite application
                 </button>
-        </form>
+        </div>
     )
 }
 

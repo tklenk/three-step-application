@@ -2,10 +2,10 @@ import React from 'react'
 
 function StepOne(props) {
 
-    const { name, email, phone, handleChange, nextStep } = props
+    const { dataForm, handleChange, nextStep } = props
 
     return (
-        <form className="steps step1">
+        <div className="steps step1">
             <ul className="circles">
                 <li className='circle active1'></li>
                 <li className='circle'></li>
@@ -14,21 +14,25 @@ function StepOne(props) {
             <input 
                 type="text" 
                 placeholder="Name..." 
-                name={name} 
+                value={dataForm.name} 
                 onChange={handleChange('name')} 
             />
             <input 
-                name="email" 
+                // name="email" 
                 type="email"
                 placeholder="Email..." 
-                email={email} 
+                pattern=".+@globex.com"
+                // size="64" 
+                // maxLength="64" 
+                value={dataForm.email} 
                 onChange={handleChange('email')} 
+                required
             />
             <input 
                 name="phone" 
-                type="tel" 
+                type="number" 
                 placeholder="Phone..." 
-                phone={phone} 
+                value={dataForm.phone} 
                 onChange={handleChange('phone')} 
             />            
             <button 
@@ -36,8 +40,8 @@ function StepOne(props) {
                 onClick={() => nextStep()}
             >
                 Next
-            </button>
-        </form>       
+            </button> 
+        </div>    
     )
 }
 

@@ -2,7 +2,7 @@ import React from 'react'
 
 function Summary(props) {
 
-    const { name, email, phone, experience, employer, link } = props
+    const { dataForm, prevStep, nextStep } = props
         
     return (
         <div className="steps summary">
@@ -14,17 +14,29 @@ function Summary(props) {
             <p className="summary-title">Your application is complete</p> 
             <hr className="summary-line"/>
             <ul className="summary-list">
-                <li>{name}</li>
-                <li>{email}</li>
-                <li>{phone}</li>
-                <li>{experience}</li>
-                <li>{employer}</li>
+                <li>{dataForm.name}</li>
+                <li>{dataForm.email}</li>
+                <li>{dataForm.phone}</li>
+                <li>{dataForm.experience}</li>
+                <li>{dataForm.employer}</li>
                 <li>
-                    <a href={link} target="_blank" rel="noopener noreferrer">
-                        {link}
+                    <a href={dataForm.link} target="_blank" rel="noopener noreferrer">
+                        {dataForm.link}
                     </a>
                 </li>
             </ul>
+            <button 
+                    className="steps-button"
+                    onClick={() => prevStep()}
+                >
+                    Back
+                </button>
+                <button 
+                    className="steps-button"
+                    onClick={() => nextStep()}
+                >
+                    Send application
+                </button>
         </div>
     )
 
