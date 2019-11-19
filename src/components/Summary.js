@@ -2,10 +2,10 @@ import React from 'react'
 
 function Summary(props) {
 
-    const { dataForm, prevStep, nextStep } = props
+    const { dataForm, prevStep, handleDataForm } = props
         
     return (
-        <div className="steps summary">
+        <form className="steps summary">
             <ul className="circles">
                 <li className='circle'></li>
                 <li className='circle'></li>
@@ -33,11 +33,11 @@ function Summary(props) {
                 </button>
                 <button 
                     className="steps-button"
-                    onClick={() => nextStep()}
+                    onClick={handleDataForm}
                 >
                     Send application
                 </button>
-        </div>
+        </form>
     )
 
 }

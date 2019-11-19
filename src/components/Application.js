@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from './axios-data'
 
 import StepOne from './StepOne'
 import StepTwo from './StepTwo'
@@ -32,8 +33,25 @@ class Application extends Component {
       [input]: e.target.value
     })
   }    
+  
+  handleDataForm = () => {
+    const data = {
+      name: this.state.name,
+      email: this.state.email,
+      phone: this.state.phone,
+      experience: this.state.experience,
+      employer: this.state.employer,
+      link: this.state.link,
+    }
+    axios.post('/data.json', data)
+      .then(response => console.log(response))
+      .catch(error => console.log(error))
 
-  render() {    
+    alert("Your data is submitted successfully")
+  }
+
+  render() {   
+      
     const { step, name, email, phone, experience, employer, link } = this.state
     const dataForm = { step, name, email, phone, experience, employer, link }
 
@@ -52,7 +70,7 @@ class Application extends Component {
             nextStep={this.nextStep} 
             prevStep={this.prevStep} 
             handleChange={this.handleChange} 
-            dataForm={dataForm} 
+            dataForm={dataForm}
           />
         )
       case 3: 
@@ -62,15 +80,16 @@ class Application extends Component {
             prevStep={this.prevStep} 
             handleChange={this.handleChange} 
             dataForm={dataForm}
+            handleDataForm={this.handleDataForm}
           />
         )
-      case 4:
-        return (
-          <h1>Thank You for Submitting an Application!</h1>
-        )
+      // case 4:
+      //   return (
+      //     <h1>Thank You for Submitting an Application!</h1>
+      //   )
       default:
         return
-    }
+        }
   }
 }
 
