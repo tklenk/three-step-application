@@ -4,16 +4,62 @@ import axios from './axios-data'
 import StepOne from './StepOne'
 import StepTwo from './StepTwo'
 import Summary from './Summary'
-
+import Input from './Input'
 class Application extends Component {
   state = {
     step: 1,
-    name: '',
-    email: '',
-    phone: '',
-    experience: '',
-    employer: '',
-    link: '',
+    dataFormApp: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your name'
+        },
+        value: ''
+      },
+      email: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your email'
+        },
+        value: ''
+      },
+      phone: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your phone'
+        },
+        value: ''
+      },
+      experience: {
+        elementType: 'select',
+        elementConfig: {
+          options: [
+            {value: 'small', displayValue: 'Small'},
+            {value: 'long', displayValue: 'Long'}
+          ]
+        },
+        value: ''
+      },
+      employer: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Current employer'
+        },
+        value: ''
+      },
+      link: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'LinkedIn Profile'
+        },
+        value: ''
+      },
+    }
   }
 
   nextStep = () => {
@@ -26,14 +72,21 @@ class Application extends Component {
     this.setState({
         step: this.state.step - 1,
     })
+  }  
+
+  inputChangedHandler = (event, input) => {
+    // console.log(event.target.value)
+    const updatedDataFormApp = {
+      ...this.state.dataFormApp
+    }
+    const updatedFormElement = {
+      ...updatedDataFormApp[input]
+    }
+    updatedFormElement.value = event.target.value
+    updatedDataFormApp[input] = updatedFormElement
+    this.setState({dataFormApp: updatedDataFormApp})
   }
-  
-  handleChange = input => e => {
-    this.setState({
-      [input]: e.target.value
-    })
-  }    
-  
+
   handleDataForm = () => {
     const data = {
       name: this.state.name,
@@ -55,41 +108,33 @@ class Application extends Component {
     const { step, name, email, phone, experience, employer, link } = this.state
     const dataForm = { step, name, email, phone, experience, employer, link }
 
-    switch(step) {
-      case 1: 
-        return (
-          <StepOne
-            nextStep={this.nextStep} 
-            handleChange={this.handleChange} 
-            dataForm={dataForm}
-          />
-        )
-      case 2: 
-        return (
-          <StepTwo 
-            nextStep={this.nextStep} 
-            prevStep={this.prevStep} 
-            handleChange={this.handleChange} 
-            dataForm={dataForm}
-          />
-        )
-      case 3: 
-        return (
-          <Summary 
-            nextStep={this.nextStep} 
-            prevStep={this.prevStep} 
-            handleChange={this.handleChange} 
-            dataForm={dataForm}
-            handleDataForm={this.handleDataForm}
-          />
-        )
-      // case 4:
-      //   return (
-      //     <h1>Thank You for Submitting an Application!</h1>
-      //   )
-      default:
-        return
-        }
+    const formElementsArray = []
+    for (let key in this.state.dataFormApp) {
+      formElementsArray.push({
+        id: key,
+        config: this.state.dataFormApp[key]
+      })
+    }
+    return (
+      <div className="steps step1">
+                <ul className="circles">
+                    <li className='circle active1'></li>
+                    <li className='circle'></li>
+                    <li className='circle'></li>
+                </ul> 
+              
+                {formElementsArray.map(formElement => (
+                  <Input 
+                    key={formElement.id}
+                    elementType={formElement.config.elementType}
+                    elementConfig={formElement.config.elementConfig}
+                    value={formElement.config.value}
+                    changedInput={(event) => this.inputChangedHandler(event, formElement.id)}
+                  />
+                ))}
+                <button className="steps-button" onClick={this.nextStep}>Next</button> 
+            </div>
+    )
   }
 }
 
