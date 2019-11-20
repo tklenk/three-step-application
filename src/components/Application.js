@@ -15,7 +15,11 @@ class Application extends Component {
           type: 'text',
           placeholder: 'Your name'
         },
-        value: ''
+        value: '',
+        validation: {
+          required: true
+        },
+        valid: false
       },
       email: {
         elementType: 'input',
@@ -23,7 +27,11 @@ class Application extends Component {
           type: 'text',
           placeholder: 'Your email'
         },
-        value: ''
+        value: '',
+        validation: {
+          required: true
+        },
+        valid: false
       },
       phone: {
         elementType: 'input',
@@ -31,7 +39,13 @@ class Application extends Component {
           type: 'text',
           placeholder: 'Your phone'
         },
-        value: ''
+        value: '',
+        validation: {
+          required: true,
+          minLength: 9,
+          maxLength: 9
+        },
+        valid: false
       },
       experience: {
         elementType: 'select',
@@ -49,7 +63,11 @@ class Application extends Component {
           type: 'text',
           placeholder: 'Current employer'
         },
-        value: ''
+        value: '',
+        validation: {
+          required: true
+        },
+        valid: false
       },
       link: {
         elementType: 'input',
@@ -57,7 +75,11 @@ class Application extends Component {
           type: 'text',
           placeholder: 'LinkedIn Profile'
         },
-        value: ''
+        value: '',
+        validation: {
+          required: true
+        },
+        valid: false
       },
     }
   }
@@ -74,6 +96,24 @@ class Application extends Component {
     })
   }  
 
+  checkValidity(value, rules) {
+    let isValid = true
+
+    if (rules.required) {
+      isValid = value.trim() !== '' && isValid
+    }
+
+    if (rules.minLength) {
+      isValid = value.length >= rules.minLength && isValid
+    }
+
+    if (rules.maxLength) {
+      isValid = value.length <= rules.maxLength && isValid
+    }
+
+    return isValid
+  }
+
   inputChangedHandler = (event, input) => {
     // console.log(event.target.value)
     const updatedDataFormApp = {
@@ -83,7 +123,9 @@ class Application extends Component {
       ...updatedDataFormApp[input]
     }
     updatedFormElement.value = event.target.value
+    updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation)
     updatedDataFormApp[input] = updatedFormElement
+    console.log(updatedFormElement)
     this.setState({dataFormApp: updatedDataFormApp})
   }
 
@@ -101,7 +143,7 @@ class Application extends Component {
       .then(response => console.log(response))
       .catch(error => console.log(error))
 
-    alert("Your data is submitted successfully")
+    // alert("Your data is submitted successfully")
   }
 
   render() {   
