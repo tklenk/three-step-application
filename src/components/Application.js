@@ -19,7 +19,8 @@ class Application extends Component {
         validation: {
           required: true
         },
-        valid: false
+        valid: false,
+        startTyping: false
       },
       email: {
         elementType: 'input',
@@ -31,7 +32,8 @@ class Application extends Component {
         validation: {
           required: true
         },
-        valid: false
+        valid: false,
+        startTyping: false
       },
       phone: {
         elementType: 'input',
@@ -45,7 +47,8 @@ class Application extends Component {
           minLength: 9,
           maxLength: 9
         },
-        valid: false
+        valid: false,
+        startTyping: false
       },
       experience: {
         elementType: 'select',
@@ -67,7 +70,8 @@ class Application extends Component {
         validation: {
           required: true
         },
-        valid: false
+        valid: false,
+        startTyping: false
       },
       link: {
         elementType: 'input',
@@ -79,7 +83,8 @@ class Application extends Component {
         validation: {
           required: true
         },
-        valid: false
+        valid: false,
+        startTyping: false
       },
     }
   }
@@ -124,6 +129,7 @@ class Application extends Component {
     }
     updatedFormElement.value = event.target.value
     updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation)
+    updatedFormElement.startTyping = true
     updatedDataFormApp[input] = updatedFormElement
     // console.log(updatedFormElement)
     this.setState({dataFormApp: updatedDataFormApp})
@@ -173,6 +179,8 @@ class Application extends Component {
                     elementConfig={formElement.config.elementConfig}
                     value={formElement.config.value}
                     invalid={!formElement.config.valid}
+                    shouldValidate={formElement.config.validation}
+                    startTyping={formElement.config.startTyping}
                     changedInput={(event) => this.inputChangedHandler(event, formElement.id)}
                   />
                 ))}

@@ -2,10 +2,16 @@ import React from 'react'
 
 const input = (props) => {
     let inputElement = null
+    let validationError = null
+    
     const inputClasses = ["inputElement"]
 
-    if (props.invalid) {
+    if (props.invalid && props.shouldValidate && props.startTyping) {
         inputClasses.push('inputInvalid')
+    }
+
+    if (props.invalid && props.startTyping) {
+        validationError = <p className="validationError">Please enter a valid value!</p>
     }
 
     switch (props.elementType) {
@@ -41,6 +47,7 @@ const input = (props) => {
         <div className="input">
             <label className="label">{props.label}</label>
             {inputElement}
+            {validationError}
         </div>
     )
 }

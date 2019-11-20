@@ -47,6 +47,12 @@
   background-color: rgb(243, 159, 150);
 }
 
+.validationError {
+  color: red;
+  margin: 5px 0;
+  font-size: 10px;
+}
+
 .steps-button {
   padding: 12px;
   color: #ffff;
