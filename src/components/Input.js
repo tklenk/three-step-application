@@ -2,11 +2,16 @@ import React from 'react'
 
 const input = (props) => {
     let inputElement = null
+    const inputClasses = ["inputElement"]
+
+    if (props.invalid) {
+        inputClasses.push('inputInvalid')
+    }
 
     switch (props.elementType) {
         case ('input'):
             inputElement = <input 
-                className="inputElement" 
+                className={inputClasses.join(' ')} 
                 {...props.elementConfig}
                 value={props.value} 
                 onChange={props.changedInput} />
@@ -14,7 +19,7 @@ const input = (props) => {
         case ('select'):
             inputElement = (
                 <select 
-                    className="inputElement" 
+                    className={inputClasses.join(' ')} 
                     value={props.value}
                     onChange={props.changedInput}>
                         {props.elementConfig.options.map(option => (
@@ -27,7 +32,7 @@ const input = (props) => {
             break
         default:
             inputElement = <input 
-                className="inputElement"
+                className={inputClasses.join(' ')} 
                 {...props.elementConfig} 
                 value={props.value}
                 onChange={props.changedInput} />

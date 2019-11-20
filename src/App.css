@@ -42,6 +42,11 @@
   background-color: #ccc;
 }
 
+.inputInvalid {
+  border: 1px solid red;
+  background-color: rgb(243, 159, 150);
+}
+
 .steps-button {
   padding: 12px;
   color: #ffff;

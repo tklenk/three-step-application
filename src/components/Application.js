@@ -125,7 +125,7 @@ class Application extends Component {
     updatedFormElement.value = event.target.value
     updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation)
     updatedDataFormApp[input] = updatedFormElement
-    console.log(updatedFormElement)
+    // console.log(updatedFormElement)
     this.setState({dataFormApp: updatedDataFormApp})
   }
 
@@ -143,7 +143,7 @@ class Application extends Component {
       .then(response => console.log(response))
       .catch(error => console.log(error))
 
-    // alert("Your data is submitted successfully")
+    alert("Your data is submitted successfully")
   }
 
   render() {   
@@ -172,6 +172,7 @@ class Application extends Component {
                     elementType={formElement.config.elementType}
                     elementConfig={formElement.config.elementConfig}
                     value={formElement.config.value}
+                    invalid={!formElement.config.valid}
                     changedInput={(event) => this.inputChangedHandler(event, formElement.id)}
                   />
                 ))}
