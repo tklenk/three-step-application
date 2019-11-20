@@ -58,7 +58,9 @@ class Application extends Component {
             {value: 'long', displayValue: 'Long'}
           ]
         },
-        value: ''
+        value: '',
+        validation: {},
+        valid: true
       },
       employer: {
         elementType: 'input',
@@ -86,7 +88,8 @@ class Application extends Component {
         valid: false,
         startTyping: false
       },
-    }
+    },
+    formIsValid: false
   }
 
   nextStep = () => {
@@ -132,7 +135,16 @@ class Application extends Component {
     updatedFormElement.startTyping = true
     updatedDataFormApp[input] = updatedFormElement
     // console.log(updatedFormElement)
-    this.setState({dataFormApp: updatedDataFormApp})
+
+    let formIsValid = true
+    for (let input in updatedDataFormApp) {
+      formIsValid = updatedDataFormApp[input].valid && formIsValid
+    }
+    console.log(formIsValid)
+    this.setState({
+      dataFormApp: updatedDataFormApp,
+      formIsValid: formIsValid
+    })
   }
 
   handleDataForm = (event) => {
@@ -149,7 +161,7 @@ class Application extends Component {
       .then(response => console.log(response))
       .catch(error => console.log(error))
 
-    alert("Your data is submitted successfully")
+    // alert("Your data is submitted successfully")
   }
 
   render() {   
@@ -184,7 +196,7 @@ class Application extends Component {
                     changedInput={(event) => this.inputChangedHandler(event, formElement.id)}
                   />
                 ))}
-                <button className="steps-button" onClick={this.nextStep}>Next</button> 
+                <button className="steps-button" disabled={!this.state.formIsValid} onClick={this.nextStep}>Next</button> 
             </form>
     )
   }

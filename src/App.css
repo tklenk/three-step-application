@@ -63,6 +63,11 @@
   margin: 10px;
 }
 
+.steps-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 /* STEP3 - SUMMARY */
 .summary-title {
   font-size: 30px;
