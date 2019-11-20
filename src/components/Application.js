@@ -87,14 +87,15 @@ class Application extends Component {
     this.setState({dataFormApp: updatedDataFormApp})
   }
 
-  handleDataForm = () => {
+  handleDataForm = (event) => {
+    event.preventDefault()
+
+    const dataForm = {}
+    for (let formElementIdentifier in this.state.dataFormApp) {
+      dataForm[formElementIdentifier] = this.state.dataFormApp[formElementIdentifier].value
+    }
     const data = {
-      name: this.state.name,
-      email: this.state.email,
-      phone: this.state.phone,
-      experience: this.state.experience,
-      employer: this.state.employer,
-      link: this.state.link,
+      dataFormApp: dataForm
     }
     axios.post('/data.json', data)
       .then(response => console.log(response))
@@ -116,7 +117,7 @@ class Application extends Component {
       })
     }
     return (
-      <div className="steps step1">
+      <form className="steps step1" onSubmit={this.handleDataForm} >
                 <ul className="circles">
                     <li className='circle active1'></li>
                     <li className='circle'></li>
@@ -133,7 +134,7 @@ class Application extends Component {
                   />
                 ))}
                 <button className="steps-button" onClick={this.nextStep}>Next</button> 
-            </div>
+            </form>
     )
   }
 }
