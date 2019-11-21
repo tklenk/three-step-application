@@ -30,7 +30,8 @@ class Application extends Component {
         },
         value: '',
         validation: {
-          required: true
+          required: true,
+          isEmail: true
         },
         valid: false,
         startTyping: false
@@ -45,7 +46,8 @@ class Application extends Component {
         validation: {
           required: true,
           minLength: 9,
-          maxLength: 9
+          maxLength: 9,
+          isNumeric: true
         },
         valid: false,
         startTyping: false
@@ -54,8 +56,9 @@ class Application extends Component {
         elementType: 'select',
         elementConfig: {
           options: [
-            {value: 'small', displayValue: 'Small'},
-            {value: 'long', displayValue: 'Long'}
+            {value: '0-2', displayValue: '0-2'},
+            {value: '2-4', displayValue: '2-4'},
+            {value: 'more than 5', displayValue: '>5'},
           ]
         },
         value: '',
@@ -93,9 +96,10 @@ class Application extends Component {
   }
 
   nextStep = () => {
-    this.setState({
-        step: this.state.step + 1,
-    })
+    // this.setState({
+    //     step: this.state.step + 1,
+    // })
+    alert('udalo sie')
   }
 
   prevStep = () => {
@@ -119,6 +123,16 @@ class Application extends Component {
       isValid = value.length <= rules.maxLength && isValid
     }
 
+    if (rules.isEmail) {
+      const pattern = /\S+@\S+\.\S+/
+      isValid = pattern.test(value) && isValid
+    }
+
+    if (rules.isNumeric) {
+      const pattern = /^\d+$/
+      isValid = pattern.test(value) && isValid
+    }
+    
     return isValid
   }
 
@@ -134,20 +148,20 @@ class Application extends Component {
     updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation)
     updatedFormElement.startTyping = true
     updatedDataFormApp[input] = updatedFormElement
-    // console.log(updatedFormElement)
+    console.log('updatedFormElement', updatedFormElement)
 
     let formIsValid = true
     for (let input in updatedDataFormApp) {
       formIsValid = updatedDataFormApp[input].valid && formIsValid
     }
-    console.log(formIsValid)
+    console.log('formIsValid', formIsValid)
     this.setState({
       dataFormApp: updatedDataFormApp,
       formIsValid: formIsValid
     })
   }
 
-  handleDataForm = (event) => {
+  handleDataForm = (event, input) => {
     event.preventDefault()
 
     const dataForm = {}
@@ -162,6 +176,8 @@ class Application extends Component {
       .catch(error => console.log(error))
 
     // alert("Your data is submitted successfully")
+
+    
   }
 
   render() {   
@@ -196,7 +212,10 @@ class Application extends Component {
                     changedInput={(event) => this.inputChangedHandler(event, formElement.id)}
                   />
                 ))}
-                <button className="steps-button" disabled={!this.state.formIsValid} onClick={this.nextStep}>Next</button> 
+                <button 
+                  className="steps-button" 
+                  disabled={!this.state.formIsValid} 
+                  onClick={this.nextStep}>Next</button> 
             </form>
     )
   }
