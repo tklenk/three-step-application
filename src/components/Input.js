@@ -17,6 +17,7 @@ const input = (props) => {
     switch (props.elementType) {
         case ('input'):
             inputElement = <input 
+                name={props.name}
                 className={inputClasses.join(' ')} 
                 {...props.elementConfig}
                 value={props.value} 
@@ -38,6 +39,7 @@ const input = (props) => {
             break
         default:
             inputElement = <input 
+                name="test"
                 className={inputClasses.join(' ')} 
                 {...props.elementConfig} 
                 value={props.value}
